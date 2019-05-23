@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Pokemon} from '../Pokemon';
 import { disableDebugTools } from '@angular/platform-browser';
 import { R3BoundTarget } from '@angular/compiler';
-import { fight } from 'src/pokemons-utils';
+import {Pokemon} from './pokemon/Pokemon';
 
 @Component({
   selector: 'app-root',
