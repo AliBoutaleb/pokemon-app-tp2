@@ -27,7 +27,7 @@
   <h5>Fight's informations </h5>
   <div id="output">
     <ul *ngFor="let message of log" >
-      <li>{{ message }}</li>
+      <li [ngStyle]="{'color': getLogColor(message.autor)}">{{ message.text }}</li>
     </ul>
   </div>
 </div>

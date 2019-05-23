@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import { disableDebugTools } from '@angular/platform-browser';
 import { R3BoundTarget } from '@angular/compiler';
 import {Pokemon} from './pokemon/Pokemon';
+import {TextLog} from './TextLog';
+import {PokemonLogColorPipe} from './pokemon-log-color.pipe';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,7 @@ export class AppComponent implements OnInit {
 
   title = 'Pokemon Arena';
   private pokemons: Pokemon[];
-  log: string[];
+  log: TextLog[];
 
   constructor() {
     this.pokemons = [];
@@ -25,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   updateLog(autor: string,message: string): void {
-    this.log.push(message);
+    this.log.push(new TextLog(autor,message));
 
     if (this.log.length > 5 ) {
       this.log.shift();
@@ -41,6 +43,7 @@ export class AppComponent implements OnInit {
       pokemon.life = 10;
     });
     this.log = [];
+    this.isFightFinish = false;
   }
 
   isSuccess(): boolean {
@@ -52,12 +55,12 @@ export class AppComponent implements OnInit {
   }
 
   attack(first: Pokemon, second: Pokemon): number {
-    this.updateLog("first.name",`${first.name} attack ${second.name}`);
+    this.updateLog(first.name,`${first.name} attack ${second.name}`);
     if (this.isSuccess()) {
       second.life = (second.life - first.damage);
-      this.updateLog("first.name",`Attack is successful - ${second.name} has ${second.life} life points left \n`);
+      this.updateLog("narrator",`Attack is successful - ${second.name} has ${second.life} life points left \n`);
     } else {
-      this.updateLog("first.name",`Attack failed ! \n`);
+      this.updateLog("narrator",`Attack failed ! \n`);
     }
     return second.life;
   }
@@ -119,7 +122,7 @@ export class AppComponent implements OnInit {
       debugger;
       const looser = first.life > 0 ? second : first;
       this.updateLog("Death",`${looser.name} has fainted`);
-      this.updateLog("narrator",`${winner.name} is the winner`);
+      this.updateLog("Winner",`${winner.name} is the winner`);
     }
     
   }
@@ -134,5 +137,31 @@ export class AppComponent implements OnInit {
         this.updateLog("narrator",`fight is stopped`);
       }
     }
+  }
+
+  getLogColor(autor: string) {
+    
+    let color: string;
+
+    switch (autor) {
+    
+      case 'Pikachu':
+        color = 'yellow';
+        break;
+      case 'Salameche':
+        color = 'orange';
+        break;
+      case 'Death':
+        color = 'red';
+        break;
+      case 'Winner':
+        color = 'red';
+        break;
+      default:
+        color = 'grey';
+        break;
+    }
+​
+    return color;
   }
 }

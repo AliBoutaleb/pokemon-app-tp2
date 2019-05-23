@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
+import {PokemonLogColorPipe} from './pokemon-log-color.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PokemonComponent
+    PokemonComponent,
+    PokemonLogColorPipe
   ],
   imports: [
     BrowserModule
